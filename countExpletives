@@ -1,0 +1,87 @@
+import os
+import operator
+from sklearn import preprocessing
+
+myList=[]
+negCorpus=[]
+posCorpus=[]
+posCorpusCounts=[]
+negCorpusCounts=[]
+
+inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Python/Classifier'
+with open(os.path.join(inDir, "googleExpletiveWords.txt")) as fh:
+        contents = fh.read()
+        contents=contents.lower()
+        for word in contents.split():
+            myList.append(word)
+        #print contents
+
+inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/linusMoreStripping3/'
+for filename in os.listdir(inDir):
+    with open(os.path.join(inDir, filename)) as fh:
+        contents = fh.read()
+        contents=contents.lower()
+        contents=contents.replace("linus","")
+        contents= contents.replace("torvalds","")
+        xsToRemove="xx"
+        for i in range (2,20):
+            contents= contents.replace(xsToRemove,"")
+            xsToRemove=xsToRemove+"x"
+        negCorpus.append(contents)
+print "FINISHED LINUS"
+
+inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/gregMoreStripping3/'
+for filename in os.listdir(inDir):
+    with open(os.path.join(inDir, filename)) as fh:
+        contents = fh.read()
+        contents=contents.lower()
+        contents=contents.replace("greg","")
+        contents= contents.replace("hartman","")
+        contents= contents.replace("kroah","")
+        contents= contents.replace("kh","")
+        xsToRemove="xx"
+        for i in range (2,20):
+            contents= contents.replace(xsToRemove,"")
+            xsToRemove=xsToRemove+"x"
+        posCorpus.append(contents)
+
+linusExpletiveDict={}
+for doc in negCorpus:
+    count=0
+    for word in doc.split():
+        if len(word)>1 and word in myList and word not in ['hit','job','cum','cox','pisses','willy','knob','carpet','fudge']:
+            count=count+1
+            if word in linusExpletiveDict.keys():
+                linusExpletiveDict[word]=linusExpletiveDict[word]+1
+            else:
+                linusExpletiveDict[word]=1
+    negCorpusCounts.append(float(count))
+            
+sorted_bad_linus = sorted(linusExpletiveDict.items(), key=operator.itemgetter(1),reverse=True)
+
+gregExpletiveDict={}
+for doc in posCorpus:
+    count=0
+    for word in doc.split():
+        if  len(word)>1 and word in myList and word not in ['hit','job','cum','cox','pisses','willy','knob','carpet','fudge'] :
+            count=count+1
+            if word in gregExpletiveDict.keys():
+                gregExpletiveDict[word]=gregExpletiveDict[word]+1
+            else:
+                gregExpletiveDict[word]=1
+    posCorpusCounts.append(float(count))
+
+sorted_bad_greg = sorted(gregExpletiveDict.items(), key=operator.itemgetter(1),reverse=True)
+
+print "Linus expletives"
+for item,count in sorted_bad_linus:
+    print item + "," + str(count)
+    
+print "Greg expletives"
+for item,count in sorted_bad_greg:
+    print item + "," + str(count)
+    
+
+min_max_scaler = preprocessing.MinMaxScaler()
+negCorpusBadWordsNormalized = min_max_scaler.fit_transform(negCorpusCounts)
+posCorpusBadWordsNormalized = min_max_scaler.fit_transform(posCorpusCounts)
