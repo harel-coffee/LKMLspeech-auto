@@ -64,6 +64,7 @@ for doc in posCorpus:
     count=0
     for word in doc.split():
         #if  len(word)>1 and word in myList and word not in ['hit','job','cum','cox','pisses','willy','knob','carpet','fudge'] :
+        if word in myList:
             count=count+1
             if word in gregExpletiveDict.keys():
                 gregExpletiveDict[word]=gregExpletiveDict[word]+1
