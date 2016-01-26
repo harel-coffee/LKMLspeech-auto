@@ -1,0 +1,95 @@
+#txt= "Mr. Green killed Colonel Mustard in the study with the candlestick. Mr. Green is not a very nice fellow";
+#sentences=nltk.tokenize.sent_tokenize(txt)
+#tokens = [nltk.tokenize.word_tokenize (s) for s in sentences]
+#pos_tagged_tokens=[nltk.pos_tag (t) for t in tokens]
+
+import os
+import operator
+from sklearn import preprocessing
+import nltk
+from textstat.textstat import textstat 
+from nltk import *
+
+negCorpus=[]
+posCorpus=[]
+
+inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/linusMoreStripping3/'
+for filename in os.listdir(inDir):
+    with open(os.path.join(inDir, filename)) as fh:
+        contents = fh.read()
+        contents=contents.lower()
+        contents=contents.replace("linus","")
+        contents= contents.replace("torvalds","")
+        xsToRemove="xx"
+        for i in range (2,20):
+            contents= contents.replace(xsToRemove,"")
+            xsToRemove=xsToRemove+"x"
+        negCorpus.append(contents)
+print "FINISHED LINUS"
+
+inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/gregMoreStripping3/'
+for filename in os.listdir(inDir):
+    with open(os.path.join(inDir, filename)) as fh:
+        contents = fh.read()
+        contents=contents.lower()
+        contents=contents.replace("greg","")
+        contents= contents.replace("hartman","")
+        contents= contents.replace("kroah","")
+        contents= contents.replace("kh","")
+        xsToRemove="xx"
+        for i in range (2,20):
+            contents= contents.replace(xsToRemove,"")
+            xsToRemove=xsToRemove+"x"
+        posCorpus.append(contents)
+
+linusWordCount=0 
+linusSentenceCount=0
+linusLexicalDiversity=0
+fleshReadingLinus=0
+fleshGradeLevelLinus=0
+uncomputableLinus=0
+for doc in negCorpus:
+    linusWordCount=linusWordCount+ textstat.lexicon_count(doc)
+    linusSentenceCount=linusSentenceCount + textstat.sentence_count(doc)
+    
+    if (len(doc.split())>0):
+        linusLexicalDiversity=linusLexicalDiversity+(len(set(doc.split())) / len(doc.split()))
+    try:
+        fleshReadingLinus=fleshReadingLinus+textstat.flesch_reading_ease(doc)
+        fleshGradeLevelLinus=fleshGradeLevelLinus+textstat.flesch_kincaid_grade(doc)
+    except:
+        uncomputableLinus=uncomputableLinus+1
+
+gregWordCount=0 
+gregSentenceCount=0
+gregLexicalDiversity=0
+fleshReadingGreg=0
+fleshGradeLevelGreg=0
+uncomputableGreg=0
+for doc in posCorpus:
+    gregWordCount=gregWordCount+ textstat.lexicon_count(doc)
+    gregSentenceCount=gregSentenceCount + textstat.sentence_count(doc)
+    if (len(doc.split())>0):
+        gregLexicalDiversity=gregLexicalDiversity+(len(set(doc.split())) / len(doc.split()))
+    
+    try:
+        fleshReadingGreg=fleshReadingGreg+textstat.flesch_reading_ease(doc)
+        fleshGradeLevelGreg=fleshGradeLevelGreg+textstat.flesch_kincaid_grade(doc)
+    except:
+         uncomputableGreg=uncomputableGreg+1   
+         
+
+print "Linus Average Word Count: " + str(linusWordCount/len(negCorpus))
+print "Greg Average Word Count: " + str(gregWordCount/len(posCorpus))
+
+print "Linus Average Sentence Count: " + str(float(linusSentenceCount)/float(len(negCorpus)-uncomputableLinus))
+print "Greg Average Sentence Count: " + str(float(gregSentenceCount)/float(len(posCorpus)-uncomputableGreg))
+
+print "Linus Average Lexical Diversity: " + str(float(linusLexicalDiversity)/len(negCorpus))
+print "Greg Average Lexical Diversity: " + str(float(gregLexicalDiversity)/len(posCorpus))
+
+print "Linus Average Flesch Reading Ease Score: " + str(fleshReadingLinus/(len(negCorpus)-uncomputableLinus))
+print "Greg Average Flesch Reading Ease Score: " + str(fleshReadingGreg/(len(posCorpus)-uncomputableGreg))
+
+print "Linus Average Grade Level: " + str(fleshGradeLevelLinus/(len(negCorpus)-uncomputableLinus))
+print "Greg Average Grade Level: " + str(fleshGradeLevelGreg/(len(posCorpus)-uncomputableGreg))
