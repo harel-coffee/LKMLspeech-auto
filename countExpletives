@@ -63,7 +63,7 @@ gregExpletiveDict={}
 for doc in posCorpus:
     count=0
     for word in doc.split():
-        if  len(word)>1 and word in myList and word not in ['hit','job','cum','cox','pisses','willy','knob','carpet','fudge'] :
+        #if  len(word)>1 and word in myList and word not in ['hit','job','cum','cox','pisses','willy','knob','carpet','fudge'] :
             count=count+1
             if word in gregExpletiveDict.keys():
                 gregExpletiveDict[word]=gregExpletiveDict[word]+1
@@ -82,6 +82,6 @@ for item,count in sorted_bad_greg:
     print item + "," + str(count)
     
 
-min_max_scaler = preprocessing.MinMaxScaler()
-negCorpusBadWordsNormalized = min_max_scaler.fit_transform(negCorpusCounts)
-posCorpusBadWordsNormalized = min_max_scaler.fit_transform(posCorpusCounts)
+#min_max_scaler = preprocessing.MinMaxScaler()
+#negCorpusBadWordsNormalized = min_max_scaler.fit_transform(negCorpusCounts)
+#posCorpusBadWordsNormalized = min_max_scaler.fit_transform(posCorpusCounts)
