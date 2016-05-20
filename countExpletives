@@ -8,7 +8,7 @@ posCorpus=[]
 posCorpusCounts=[]
 negCorpusCounts=[]
 
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Python/Classifier'
+inDir="/path/todirectory/where/stuff/is"
 with open(os.path.join(inDir, "googleExpletiveWords.txt")) as fh:
         contents = fh.read()
         contents=contents.lower()
@@ -16,7 +16,7 @@ with open(os.path.join(inDir, "googleExpletiveWords.txt")) as fh:
             myList.append(word)
         #print contents
 
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/linusMoreStripping3/'
+inDir="/path/todirectory/where/stuff/is"
 for filename in os.listdir(inDir):
     with open(os.path.join(inDir, filename)) as fh:
         contents = fh.read()
@@ -30,7 +30,7 @@ for filename in os.listdir(inDir):
         negCorpus.append(contents)
 print "FINISHED LINUS"
 
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/gregMoreStripping3/'
+inDir="/path/todirectory/where/stuff/is"
 for filename in os.listdir(inDir):
     with open(os.path.join(inDir, filename)) as fh:
         contents = fh.read()
