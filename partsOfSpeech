@@ -1,8 +1,3 @@
-#txt= "Mr. Green killed Colonel Mustard in the study with the candlestick. Mr. Green is not a very nice fellow";
-#sentences=nltk.tokenize.sent_tokenize(txt)
-#tokens = [nltk.tokenize.word_tokenize (s) for s in sentences]
-#pos_tagged_tokens=[nltk.pos_tag (t) for t in tokens]
-
 import os
 import operator
 from sklearn import preprocessing
@@ -12,13 +7,13 @@ negCorpus=[]
 posCorpus=[]
 partsOfSpeechTagsGuideDict={}
 
-with open(os.path.join("C:\Users\danie_000\Documents\Elon\Big Honors Project of Death\Python\Classifier", "summaryOfPOSTags.txt")) as fh:
+with open(os.path.join("/path/todirectory/where/stuff/is", "summaryOfPOSTags.txt")) as fh:
     content = fh.readlines()
     for line in content:
         splitLine=line.split("\t")
         partsOfSpeechTagsGuideDict[splitLine[1]]=splitLine[2].strip()
 
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/linusMoreStripping3/'
+inDir="/path/todirectory/where/stuff/is"
 for filename in os.listdir(inDir):
     with open(os.path.join(inDir, filename)) as fh:
         contents = fh.read()
@@ -32,7 +27,7 @@ for filename in os.listdir(inDir):
         negCorpus.append(contents)
 print "FINISHED LINUS"
 
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/gregMoreStripping3/'
+inDir="/path/todirectory/where/stuff/is"
 for filename in os.listdir(inDir):
     with open(os.path.join(inDir, filename)) as fh:
         contents = fh.read()
