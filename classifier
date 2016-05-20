@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Code adapted from Scott Spurlock in-class lectures 10/21/15
 # Some code taken from: 
 # http://scikit-learn.org/stable/auto_examples/text/document_classification_20newsgroups.html#example-text-document-classification-20newsgroups-py
 # The rest implemented by Daniel Schneider 1/17/2016
@@ -70,7 +69,7 @@ negCorpus = []
 # remove all indications of Greg's name from emails as they usually identify a signature line at the end so would not be useful for classification
 # remove all subsets of xx's between two x's and 22 x's as these indicate separators in the email between chunks of the email and are not useful for classification
 
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/gregMoreStripping3/'
+inDir="/path/todirectory/where/stuff/is"
 for filename in os.listdir(inDir):
     with open(os.path.join(inDir, filename)) as fh:
         contents = fh.read()
@@ -91,7 +90,7 @@ print "FINISHED GREG"
 # change all text contents to lowercase
 # remove all indications of Linus's name from emails as they usually identify a signature line at the end so would not be useful for classification
 # remove all subsets of xx's between two x's and 22 x's as these indicate separators in the email between chunks of the email and are not useful for classification
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Data/linusMoreStripping3/'
+inDir="/path/todirectory/where/stuff/is"
 for filename in os.listdir(inDir):
     with open(os.path.join(inDir, filename)) as fh:
         contents = fh.read()
@@ -109,7 +108,7 @@ print "FINISHED LINUS"
 #Read in a list of expletive words compiled by Google https://gist.github.com/jamiew/1112488
 #Assign this list to a variable called expletiveList
 expletiveList=[]
-inDir='C:/Users/danie_000/Documents/Elon/Big Honors Project of Death/Python/Classifier'
+inDir="/path/todirectory/where/stuff/is"
 with open(os.path.join(inDir, "googleExpletiveWords.txt")) as fh:
         contents = fh.read()
         contents=contents.lower()
